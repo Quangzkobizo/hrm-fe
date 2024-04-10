@@ -1,7 +1,12 @@
 <template>
   <div class="my-comp">
     <!-- Brand Logo -->
-    <MenuItem v-for="item in menuItems" :key="item.label" :label="item.label" :imgSrc="item.imgSrc" />
+    <MenuItem
+      v-for="item in menuItems"
+      :key="item.label"
+      :label="item.label"
+      :imgSrc="item.imgSrc"
+    />
 
     <!-- SidebarSearch Form -->
     <div class="input-group my-search">
@@ -21,30 +26,41 @@
 </template>
 
 <script>
-import MenuItem from './menu/MenuItem.vue';
-import homeImg from '../../public/gecko.webp';
-import userImg from '../../public/gecko.webp';
+import MenuItem from "./menu/MenuItem.vue";
+import homeImg from "../../public/gecko.webp";
+import userImg from "../../public/gecko.webp";
+import { computed, toRefs } from "vue";
 
 export default {
-    name: 'SideBar',
-    components: { MenuItem },
-    setup() {
-        const menuItems = [
-            {
-                label: 'QuangzHRM',
-                imgSrc: homeImg
-            },
-            {
-                label: 'user',
-                imgSrc: userImg
-            },
-        ]
+  name: "SideBar",
+  components: { MenuItem },
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
+  setup(props) {
+    const { user: userData } = toRefs(props);
 
-        return {
-            menuItems,
-        }
-    }
-}
+    const menuItems = computed(() => {
+      return [
+        {
+          label: "App name",
+          imgSrc: homeImg,
+        },
+        {
+          label: userData == null ? "no_info" : userData.value.name,
+          imgSrc: userImg,
+        },
+      ];
+    });
+
+    return {
+      menuItems,
+    };
+  },
+};
 </script>
 
 <style>
@@ -64,10 +80,9 @@ export default {
   opacity: 1; /* Firefox */
 }
 
-
 .form-control:focus {
-    background-color: #3f474e;
-    color: white;
+  background-color: #3f474e;
+  color: white;
 }
 .my-search i {
   color: white;
