@@ -44,7 +44,7 @@ export default {
     const get = async () => {
       try {
         const response = await sendMeRequest();
-        console.log("res: ", response);
+        console.log("response from App.vue: ", response);
         if (response && response.data.user) {
           user.value = response.data.user;
         }

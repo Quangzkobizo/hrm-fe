@@ -6,67 +6,60 @@
     <div class="my-form ps-3 pe-3 pb-5">
       <form @submit.prevent="submitForm">
         <div class="my-input-group mt-3">
-          <label for="nameInput" class="fw-bold">Name</label>
+          <label class="fw-bold">Name</label>
           <input
             v-model="myFormData.name"
             type="text"
             class="form-control"
-            id="nameInput"
             placeholder="Mr Brown"
           />
         </div>
 
         <div class="my-input-group mt-3">
-          <label for="nameInput" class="fw-bold">Phone</label>
+          <label class="fw-bold">Phone</label>
           <input
             v-model="myFormData.phone"
             type="text"
             class="form-control"
-            id="nameInput"
             placeholder="0123456789"
           />
         </div>
 
         <div class="my-input-group mt-3">
-          <label for="nameInput" class="fw-bold">Address</label>
+          <label class="fw-bold">Address</label>
           <input
             v-model="myFormData.address"
             type="text"
             class="form-control"
-            id="nameInput"
             placeholder="Somewhere on the earth"
           />
         </div>
 
         <div class="my-input-group mt-3">
-          <label for="nameInput" class="fw-bold">Birth Date</label>
+          <label class="fw-bold">Birth Date</label>
           <input
             v-model="myFormData.birthDate"
             type="date"
             class="form-control"
-            id="nameInput"
             placeholder="3/2/2003"
           />
         </div>
 
         <div class="my-input-group mt-3">
-          <label for="nameInput" class="fw-bold">Gender</label>
-          <input
-            v-model="myFormData.gender"
-            type="text"
-            class="form-control"
-            id="nameInput"
-            placeholder="Male"
-          />
+          <label class="fw-bold">Gender</label>
+          <select v-model="myFormData.gender" class="form-control">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
         </div>
 
         <div class="my-input-group mt-3">
-          <label for="nameInput" class="fw-bold">Avatar</label>
+          <label class="fw-bold">Avatar</label>
           <input
             @change="handleAvatarChange"
             type="file"
             class="form-control"
-            id="nameInput"
             placeholder="Your name"
           />
         </div>
@@ -82,23 +75,49 @@
 <script>
 import axios from "../../api.js";
 import axiosOrigin from "axios";
+import { onMounted, reactive, ref } from "vue";
+import { sendMeRequest } from "@/apicall.js";
 
 // import axios from "axios";
 
 export default {
   name: "InfoForm",
-  data() {
-    return {
-      myFormData: {
-        name: "",
-        phone: "",
-        address: "",
-        birthDate: "",
-        gender: "",
-        avatar: null,
-      },
+
+  setup() {
+    const myFormData = reactive({
+      name: "",
+      phone: "",
+      address: "",
+      birthDate: "",
+      gender: "",
+      avatar: null,
+    });
+    const loggingUser = ref({});
+
+    const get = async () => {
+      try {
+        const response = await sendMeRequest();
+        if (response && response.data.user) {
+          loggingUser.value = response.data.user;
+
+          myFormData.name = loggingUser.value.name;
+          myFormData.phone = loggingUser.value.phone;
+          myFormData.address = loggingUser.value.address;
+          myFormData.birthDate = loggingUser.value.birthDate;
+          myFormData.gender = loggingUser.value.gender;
+        }
+      } catch (error) {
+        console.log("Error fetching user:", error);
+      }
     };
+
+    onMounted(() => {
+      get();
+    });
+
+    return { loggingUser, myFormData };
   },
+
   methods: {
     async submitForm() {
       console.log("Let SUBMIT");
@@ -145,6 +164,7 @@ export default {
       };
 
       // Send upload request to the server with JWT token in header
+      // I use Origin axios because I need diffirent Content-Type in headers
       axiosOrigin
         .post("http://localhost:8000/api/user/update-avatar", formData, {
           headers,
