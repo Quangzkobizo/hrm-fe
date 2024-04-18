@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Dashboard from "../components/Dashboard.vue";
 import { authGuard } from "./guards/auth";
 import Logout from "../components/auth/Logout.vue";
+import InfoForm from "@/components/form/InfoForm.vue";
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/user/update",
+    name: "user.update",
+    component: InfoForm,
   },
 ];
 

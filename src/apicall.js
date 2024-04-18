@@ -3,10 +3,8 @@ import axios from "./api";
 export async function checkAuthentication() {
   const jwt_token = localStorage.getItem("jwt-token");
   try {
-    console.log("token: ", jwt_token);
     if (jwt_token) {
       // Nếu có jwt_token, kiểm tra xem người dùng đã xác thực chưa bằng cách gọi API
-      console.log("before me: ", localStorage.getItem("jwt-token"));
       const response = await axios.get("/user/me");
       if (response) {
         return true;

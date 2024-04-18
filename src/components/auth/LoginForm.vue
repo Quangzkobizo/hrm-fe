@@ -88,7 +88,7 @@ export default {
         if (response) {
           this.errorMessage = "";
           localStorage.setItem("jwt-token", response.data.authorisation.token);
-          this.$router.push("/dashboard");
+          this.$router.go("/dashboard");
         } else {
           throw new Error("Aiza, khong on roi");
         }
@@ -96,23 +96,6 @@ export default {
         console.log(error);
         this.errorMessage = "Wrong email or password";
       }
-    },
-    async sendLoginRequest1111() {
-      await axios
-        .post("/login", {
-          email: this.email,
-          password: this.password,
-        })
-        .then((response) => {
-          console.log(response);
-          this.errorMessage = "";
-          localStorage.setItem("jwt-token", response.data.authorisation.token);
-          this.$router.push("/dashboard");
-        })
-        .catch((error) => {
-          console.log(error);
-          this.errorMessage = "Wrong email or password";
-        });
     },
   },
 };

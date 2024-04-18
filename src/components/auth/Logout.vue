@@ -1,5 +1,8 @@
 <template>
   <div>This is logout page</div>
+  <a href="login">Back to login page</a>
+  <br />
+  <a href="dashboard">To Dashboard</a>
 </template>
 
 <script>

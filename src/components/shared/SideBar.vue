@@ -22,13 +22,24 @@
         </button>
       </div>
     </div>
+
+    <!-- THIS DIV IS FOR TEST ONLY -->
+    <div class="will-delete">
+      <a href="/#/logout">Logout</a>
+      <br />
+      <a href="/#/login">Login</a>
+      <br />
+      <a href="/#/dashboard">Dashboard</a>
+      <br />
+      <a href="/#/user/update">user/update</a>
+    </div>
   </div>
 </template>
 
 <script>
-import MenuItem from "./menu/MenuItem.vue";
-import homeImg from "../../public/gecko.webp";
-import userImg from "../../public/gecko.webp";
+import MenuItem from "../menu/MenuItem.vue";
+import homeImg from "../../../public/gecko.webp";
+// import userImg from "../../../public/gecko.webp";
 import { computed, toRefs } from "vue";
 
 export default {
@@ -51,7 +62,8 @@ export default {
         },
         {
           label: userData == null ? "no_info" : userData.value.name,
-          imgSrc: userImg,
+          imgSrc:
+            "http://localhost:8000/storage/avatars/" + userData.value.avatar,
         },
       ];
     });
@@ -63,7 +75,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.my-comp {
+  height: 100vh;
+}
+
 .my-search {
   background-color: #3f474e;
   border: 1px solid #56606a;

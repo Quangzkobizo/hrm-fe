@@ -5,8 +5,6 @@ export const authGuard = async (router) => {
     try {
       // Kiểm tra xem người dùng đã đăng nhập chưa
       let isAuthenticated = await checkAuthentication();
-      console.log("isAuth: " + isAuthenticated);
-
       if (isAuthenticated) {
         // Nếu đã đã xác thực, không cho vào trang đăng nhập
         if (to.path === "/login") {
