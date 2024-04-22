@@ -2,8 +2,9 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Dashboard from "../components/Dashboard.vue";
 import { authGuard } from "./guards/auth";
 import Logout from "../components/auth/Logout.vue";
-import InfoForm from "@/components/form/InfoForm.vue";
+import UserForm from "@/components/form/UserForm.vue";
 import EmployeeList from "@/components/employees/EmployeeList.vue";
+import AddUser from "@/components/form/AddUser.vue";
 
 const routes = [
   {
@@ -29,12 +30,17 @@ const routes = [
   {
     path: "/user/update/:id?",
     name: "user.update",
-    component: InfoForm,
+    component: UserForm,
   },
   {
     path: "/users",
     name: "user.index",
     component: EmployeeList,
+  },
+  {
+    path: "/user/create",
+    name: "user.create",
+    component: AddUser,
   },
 ];
 

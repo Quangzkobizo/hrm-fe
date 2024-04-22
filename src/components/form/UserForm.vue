@@ -1,7 +1,7 @@
 <template>
   <div class="my-comp w-50 m-auto">
     <div class="my-header">
-      <h3 class="text-white ms-3 pt-2 pb-2">Fill your information</h3>
+      <h3 class="text-white ms-3 pt-2 pb-2">Update user info</h3>
     </div>
 
     <div class="my-form ps-3 pe-3 pb-5">
@@ -79,7 +79,6 @@ import axiosOrigin from "axios";
 // import { $route } from "vue-router";
 import { useRoute } from "vue-router";
 import { onMounted, reactive, ref, toRefs } from "vue";
-import { sendMeRequest } from "@/apicall.js";
 
 // import axios from "axios";
 
@@ -90,7 +89,6 @@ export default {
     //get Route param
     const route = useRoute();
     const UserId = route.params.id;
-
     const myFormData = reactive({
       name: "",
       phone: "",
@@ -145,7 +143,6 @@ export default {
       await this.$router.push("/dashboard");
       window.location.reload();
     },
-
     async handleFileUpload() {
       // Get the selected file
       const file = this.myFormData.avatar;

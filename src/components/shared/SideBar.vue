@@ -9,9 +9,9 @@
     />
 
     <span class="fas fa-users"></span>
-    <a href="/#/users">
-      <span class="brand-text font-weight-light ms-3">Employees</span>
-    </a>
+    <router-link :to="{ name: 'user.index' }">
+      <span class="brand-text ms-3">Employees</span>
+    </router-link>
 
     <hr />
 

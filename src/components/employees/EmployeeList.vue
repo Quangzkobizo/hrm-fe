@@ -1,11 +1,32 @@
 <template>
   <div class="my-comp ms-5 me-5">
     <div class="my-table-block-head">
-      <div class="pt-3 pb-3 d-flex align-items-center">
-        <h5 class="ms-3 me-3 mb-0">Employees</h5>
-        <div id="my-employee-search" class="bg-white rounded-3 overflow-hidden">
-          <label class="fas fa-search ms-2 me-2"></label>
-          <input class="border-0" placeholder="Search" type="text" />
+      <div class="pt-3 pb-3 d-flex align-items-center justify-content-between">
+        <div class="my-left d-flex">
+          <h5 class="ms-3 me-3 mb-0">Employees</h5>
+          <div
+            id="my-employee-search"
+            class="bg-white rounded-3 overflow-hidden"
+          >
+            <label class="fas fa-search ms-2 me-2"></label>
+            <input class="border-0" placeholder="Search" type="text" />
+          </div>
+        </div>
+        <div class="my-right me-5 d-flex">
+          <div
+            class="my-circle-button my-tooltip d-flex justify-content-center align-items-center"
+          >
+            <RouterLink :to="{ name: 'user.create' }">
+              <i class="fas fa-plus text-white"></i>
+              <span class="my-tooltiptext">Add employee</span>
+            </RouterLink>
+          </div>
+          <div
+            class="my-circle-button my-tooltip d-flex justify-content-center align-items-center"
+          >
+            <i class="fas fa-redo text-white"></i>
+            <span class="my-tooltiptext">Refresh</span>
+          </div>
         </div>
       </div>
     </div>
@@ -53,7 +74,7 @@
                 :to="{ name: 'user.update', params: { id: user.id } }"
               >
                 <a class="my-tooltip" style="cursor: pointer">
-                  <i class="fas fa-edit text-primary me-3"></i>
+                  <i class="fas fa-edit text-primary me-1 ms-1"></i>
                   <span class="my-tooltiptext">Edit</span>
                 </a>
               </RouterLink>
@@ -64,7 +85,7 @@
                 class="my-tooltip"
                 style="cursor: pointer"
               >
-                <i class="far fa-trash-alt text-danger"></i>
+                <i class="far fa-trash-alt text-danger me-1 ms-1"></i>
                 <span class="my-tooltiptext">Delete</span>
               </a>
               <!-- </RouterLink> -->
@@ -126,5 +147,15 @@ export default {
 
 tr {
   border-bottom: 1px solid lightgray;
+}
+
+.my-circle-button {
+  background-color: #3f51b5;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 </style>
