@@ -55,6 +55,15 @@
           </select>
         </div>
 
+        <div class="my-input-group mt-3" v-if="loggingUser.role == 'admin'">
+          <label class="fw-bold">Role</label>
+          <select v-model="myFormData.role" class="form-control">
+            <!-- <option value="admin">Admin</option> -->
+            <option value="employee">Employee</option>
+            <option value="manager">Manager</option>
+          </select>
+        </div>
+
         <div class="my-input-group mt-3">
           <label class="fw-bold">Avatar</label>
           <input
@@ -95,6 +104,7 @@ export default {
       address: "",
       birthDate: "",
       gender: "",
+      role: "",
       avatar: null,
     });
     const userToEdit = ref({});
@@ -111,6 +121,7 @@ export default {
           myFormData.address = userToEdit.value.address;
           myFormData.birthDate = userToEdit.value.birthDate;
           myFormData.gender = userToEdit.value.gender;
+          myFormData.role = userToEdit.value.role;
         }
       } catch (error) {
         console.log("Error fetching user:", error);
@@ -121,7 +132,10 @@ export default {
       get();
     });
 
-    return { userToEdit, myFormData };
+    const loggingUser = JSON.parse(localStorage.getItem("loggingUser"));
+    console.log(loggingUser);
+
+    return { userToEdit, myFormData, loggingUser };
   },
 
   methods: {
@@ -184,6 +198,7 @@ export default {
       formData.append("address", this.myFormData.address);
       formData.append("birthDate", this.myFormData.birthDate);
       formData.append("gender", this.myFormData.gender);
+      formData.append("role", this.myFormData.role);
 
       console.log("let's go AXIOS");
 

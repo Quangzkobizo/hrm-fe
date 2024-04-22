@@ -52,6 +52,7 @@ export default {
         console.log("response from App.vue: ", response);
         if (response && response.data.user) {
           user.value = response.data.user;
+          localStorage.setItem("loggingUser", JSON.stringify(user.value));
         }
       } catch (error) {
         console.error("Error fetching user:", error);
