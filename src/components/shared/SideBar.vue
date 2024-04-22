@@ -8,6 +8,13 @@
       :imgSrc="item.imgSrc"
     />
 
+    <span class="fas fa-users"></span>
+    <a href="/#/users">
+      <span class="brand-text font-weight-light ms-3">Employees</span>
+    </a>
+
+    <hr />
+
     <!-- SidebarSearch Form -->
     <div class="input-group my-search">
       <input
@@ -23,6 +30,17 @@
       </div>
     </div>
 
+    <!-- DIV này chỉ để TEST -->
+    <div>
+      <hr />
+      ROLE: {{ user.role }}
+      <hr />
+
+      ID: {{ user.id }}
+      <hr />
+      <a href="/#/user/update"></a>
+    </div>
+
     <!-- THIS DIV IS FOR TEST ONLY -->
     <div class="will-delete">
       <a href="/#/logout">Logout</a>
@@ -31,7 +49,9 @@
       <br />
       <a href="/#/dashboard">Dashboard</a>
       <br />
-      <a href="/#/user/update">user/update</a>
+      <router-link :to="{ name: 'user.update', params: { id: user.id } }"
+        >user/update
+      </router-link>
     </div>
   </div>
 </template>

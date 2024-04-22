@@ -5,7 +5,7 @@ export async function checkAuthentication() {
   try {
     if (jwt_token) {
       // Nếu có jwt_token, kiểm tra xem người dùng đã xác thực chưa bằng cách gọi API
-      const response = await axios.get("/user/me");
+      const response = await axios.get("/users/me");
       if (response) {
         return true;
       } else {
@@ -24,7 +24,7 @@ export async function sendMeRequest() {
   const jwt_token = localStorage.getItem("jwt-token");
   try {
     if (jwt_token) {
-      let response = await axios.get("/user/me");
+      let response = await axios.get("/users/me");
       return response;
     } else {
       return null;

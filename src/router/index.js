@@ -3,6 +3,7 @@ import Dashboard from "../components/Dashboard.vue";
 import { authGuard } from "./guards/auth";
 import Logout from "../components/auth/Logout.vue";
 import InfoForm from "@/components/form/InfoForm.vue";
+import EmployeeList from "@/components/employees/EmployeeList.vue";
 
 const routes = [
   {
@@ -26,9 +27,14 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: "/user/update",
+    path: "/user/update/:id?",
     name: "user.update",
     component: InfoForm,
+  },
+  {
+    path: "/users",
+    name: "user.index",
+    component: EmployeeList,
   },
 ];
 

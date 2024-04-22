@@ -1,8 +1,9 @@
 <template>
-  <div class="my-comp">
+  <div class="my-comp w-50 m-auto">
     <div class="my-header">
       <h3 class="text-white ms-3 pt-2 pb-2">Fill your information</h3>
     </div>
+
     <div class="my-form ps-3 pe-3 pb-5">
       <form @submit.prevent="submitForm">
         <div class="my-input-group mt-3">
@@ -75,7 +76,9 @@
 <script>
 import axios from "../../api.js";
 import axiosOrigin from "axios";
-import { onMounted, reactive, ref } from "vue";
+// import { $route } from "vue-router";
+import { useRoute } from "vue-router";
+import { onMounted, reactive, ref, toRefs } from "vue";
 import { sendMeRequest } from "@/apicall.js";
 
 // import axios from "axios";
@@ -99,7 +102,6 @@ export default {
         const response = await sendMeRequest();
         if (response && response.data.user) {
           loggingUser.value = response.data.user;
-
           myFormData.name = loggingUser.value.name;
           myFormData.phone = loggingUser.value.phone;
           myFormData.address = loggingUser.value.address;
@@ -115,7 +117,11 @@ export default {
       get();
     });
 
-    return { loggingUser, myFormData };
+    //get Route param
+    const route = useRoute();
+    const UserId = route.params.id;
+
+    return { loggingUser, myFormData, UserId };
   },
 
   methods: {
@@ -166,9 +172,13 @@ export default {
       // Send upload request to the server with JWT token in header
       // I use Origin axios because I need diffirent Content-Type in headers
       axiosOrigin
-        .post("http://localhost:8000/api/user/update-avatar", formData, {
-          headers,
-        })
+        .post(
+          "http://localhost:8000/api/users-avatar/" + this.UserId,
+          formData,
+          {
+            headers,
+          }
+        )
         .then((response) => {
           console.log(response);
         })
@@ -188,7 +198,7 @@ export default {
       console.log("let's go AXIOS");
 
       axios
-        .put("/user/update", this.myFormData)
+        .put("/users/" + this.UserId, this.myFormData)
         .then((response) => {
           console.log(response.data);
           // Handle response here

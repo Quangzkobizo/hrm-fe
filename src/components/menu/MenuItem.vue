@@ -16,20 +16,17 @@
 
 <script>
 export default {
-    props: {
-        label: {
-            type: String,
-            default: '',
-        },
-        imgSrc: {
-            type: String,
-            default: '',
-        }
-    }
+  props: {
+    label: {
+      type: String,
+      default: "",
+    },
+    imgSrc: {
+      type: String,
+      default: "",
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
-
+<style lang="scss" scoped></style>
