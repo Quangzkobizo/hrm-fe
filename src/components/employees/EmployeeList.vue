@@ -49,14 +49,25 @@
             <td>{{ user.birthDate }}</td>
             <td>{{ user.gender }}</td>
             <td>
-              <a class="my-tooltip" style="cursor: pointer">
-                <i class="fas fa-edit text-primary me-3"></i>
-                <span class="my-tooltiptext">Edit</span>
-              </a>
-              <a class="my-tooltip" style="cursor: pointer">
+              <RouterLink
+                :to="{ name: 'user.update', params: { id: user.id } }"
+              >
+                <a class="my-tooltip" style="cursor: pointer">
+                  <i class="fas fa-edit text-primary me-3"></i>
+                  <span class="my-tooltiptext">Edit</span>
+                </a>
+              </RouterLink>
+
+              <!-- <RouterLink :to="{ name: 'dashboard' }"> -->
+              <a
+                @click="deleteAlert(user.id)"
+                class="my-tooltip"
+                style="cursor: pointer"
+              >
                 <i class="far fa-trash-alt text-danger"></i>
                 <span class="my-tooltiptext">Delete</span>
               </a>
+              <!-- </RouterLink> -->
             </td>
           </tr>
         </tbody>
@@ -87,6 +98,15 @@ export default {
     return {
       userIndexResponse,
     };
+  },
+  methods: {
+    deleteAlert: async function (id) {
+      if (confirm("Are you sure?")) {
+        const axiosRes = await axios.delete("users/" + id);
+        console.log(axiosRes);
+        window.location.reload();
+      }
+    },
   },
 };
 </script>

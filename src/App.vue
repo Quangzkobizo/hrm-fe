@@ -26,6 +26,7 @@
 import { useRoute } from "vue-router";
 import { computed, onMounted, ref } from "vue";
 import { sendMeRequest } from "./apicall";
+import axios from "./api";
 
 import SideBar from "./components/shared/SideBar";
 import NavBar from "./components/shared/NavBar";
@@ -37,6 +38,7 @@ export default {
     NavBar,
   },
   setup() {
+    //Chứa các route không cần hiển thị Sidebar & navbar
     const blackListRoute = ["login", "register", "logout"];
     const user = ref({});
 
@@ -45,7 +47,8 @@ export default {
 
     const get = async () => {
       try {
-        const response = await sendMeRequest();
+        // const response = await sendMeRequest();
+        const response = await axios.get("/users/me");
         console.log("response from App.vue: ", response);
         if (response && response.data.user) {
           user.value = response.data.user;

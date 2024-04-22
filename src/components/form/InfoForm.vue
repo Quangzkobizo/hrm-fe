@@ -87,6 +87,10 @@ export default {
   name: "InfoForm",
 
   setup() {
+    //get Route param
+    const route = useRoute();
+    const UserId = route.params.id;
+
     const myFormData = reactive({
       name: "",
       phone: "",
@@ -95,18 +99,20 @@ export default {
       gender: "",
       avatar: null,
     });
-    const loggingUser = ref({});
+    const userToEdit = ref({});
 
     const get = async () => {
       try {
-        const response = await sendMeRequest();
+        // const response = await sendMeRequest();
+        const response = await axios.get("/users/" + UserId);
+
         if (response && response.data.user) {
-          loggingUser.value = response.data.user;
-          myFormData.name = loggingUser.value.name;
-          myFormData.phone = loggingUser.value.phone;
-          myFormData.address = loggingUser.value.address;
-          myFormData.birthDate = loggingUser.value.birthDate;
-          myFormData.gender = loggingUser.value.gender;
+          userToEdit.value = response.data.user;
+          myFormData.name = userToEdit.value.name;
+          myFormData.phone = userToEdit.value.phone;
+          myFormData.address = userToEdit.value.address;
+          myFormData.birthDate = userToEdit.value.birthDate;
+          myFormData.gender = userToEdit.value.gender;
         }
       } catch (error) {
         console.log("Error fetching user:", error);
@@ -117,11 +123,7 @@ export default {
       get();
     });
 
-    //get Route param
-    const route = useRoute();
-    const UserId = route.params.id;
-
-    return { loggingUser, myFormData, UserId };
+    return { userToEdit, myFormData };
   },
 
   methods: {
@@ -130,16 +132,7 @@ export default {
 
       // Tạo một mảng chứa các promise từ các phương thức không đồng bộ
       const asyncTasks = [];
-
-      if (
-        this.myFormData.name ||
-        this.myFormData.phone ||
-        this.myFormData.address ||
-        this.myFormData.birthDate ||
-        this.myFormData.gender
-      ) {
-        asyncTasks.push(this.handleTextInfo());
-      }
+      asyncTasks.push(this.handleTextInfo());
 
       if (this.myFormData.avatar) {
         console.log("let upload image");
@@ -173,7 +166,7 @@ export default {
       // I use Origin axios because I need diffirent Content-Type in headers
       axiosOrigin
         .post(
-          "http://localhost:8000/api/users-avatar/" + this.UserId,
+          "http://localhost:8000/api/users-avatar/" + this.userToEdit.id,
           formData,
           {
             headers,
@@ -198,7 +191,7 @@ export default {
       console.log("let's go AXIOS");
 
       axios
-        .put("/users/" + this.UserId, this.myFormData)
+        .put("/users/" + this.userToEdit.id, this.myFormData)
         .then((response) => {
           console.log(response.data);
           // Handle response here

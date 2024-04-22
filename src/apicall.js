@@ -20,6 +20,7 @@ export async function checkAuthentication() {
   }
 }
 
+/*
 export async function sendMeRequest() {
   const jwt_token = localStorage.getItem("jwt-token");
   try {
@@ -34,6 +35,7 @@ export async function sendMeRequest() {
     return null;
   }
 }
+*/
 
 export async function sendLoginRequest(emailx, passwordx) {
   try {
