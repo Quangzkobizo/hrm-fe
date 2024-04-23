@@ -48,16 +48,13 @@
         </thead>
 
         <tbody class="my-table-body">
-          <tr class="" v-for="user in userIndexResponse" :key="user.id">
+          <tr class="" v-for="user in paginatedUsers" :key="user.id">
             <td class="ps-3 pe-3">
               <img
                 height="36px"
                 width="36px"
-                :src="
-                  'http://localhost:8000/storage/avatars/' +
-                  (user.avatar ? user.avatar : 'default.png')
-                "
-                alt="Logo"
+                :src="getUserAvatar(user)"
+                alt="Avatar"
                 class="rounded-circle opacity-75"
               />
             </td>
@@ -78,8 +75,6 @@
                   <span class="my-tooltiptext">Edit</span>
                 </a>
               </RouterLink>
-
-              <!-- <RouterLink :to="{ name: 'dashboard' }"> -->
               <a
                 @click="deleteAlert(user.id)"
                 class="my-tooltip"
@@ -88,11 +83,32 @@
                 <i class="far fa-trash-alt text-danger me-1 ms-1"></i>
                 <span class="my-tooltiptext">Delete</span>
               </a>
-              <!-- </RouterLink> -->
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div
+      class="my-pagination mt-4 me-3 ms-auto d-flex justify-content-end align-items-center"
+    >
+      <label class="me-3">Item per page: </label>
+      <select v-model="itemPerPage">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+
+      <i
+        class="fas fa-angle-double-left fa-lg ms-3 me-2 my-cursor-pointer"
+        @click="previousPage"
+      ></i>
+      <span>Page: {{ currentPage }}</span>
+      <i
+        class="fas fa-angle-double-right fa-lg ms-2 me-2 my-cursor-pointer"
+        @click="nextPage"
+      ></i>
     </div>
   </div>
 </template>
@@ -102,6 +118,20 @@ import axios from "../../api.js";
 
 export default {
   name: "EmployeeList",
+  data() {
+    return {
+      itemPerPage: 10,
+      currentPage: 1,
+    };
+  },
+  computed: {
+    paginatedUsers() {
+      const startIndex = (this.currentPage - 1) * this.itemPerPage;
+      const endIndex = startIndex + this.itemPerPage;
+      return this.userIndexResponse.slice(startIndex, endIndex);
+    },
+  },
+
   async setup() {
     let userIndexResponse = null;
 
@@ -121,12 +151,31 @@ export default {
     };
   },
   methods: {
-    deleteAlert: async function (id) {
+    async deleteAlert(id) {
       if (confirm("Are you sure?")) {
         const axiosRes = await axios.delete("users/" + id);
         console.log(axiosRes);
         window.location.reload();
       }
+    },
+    nextPage() {
+      const totalPages = Math.ceil(
+        this.userIndexResponse.length / this.itemPerPage
+      );
+      if (this.currentPage < totalPages) {
+        this.currentPage++;
+      }
+    },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+
+    getUserAvatar(user) {
+      return user.avatar
+        ? `http://localhost:8000/storage/avatars/${user.avatar}`
+        : "http://localhost:8000/storage/avatars/default.png";
     },
   },
 };

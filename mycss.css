@@ -42,3 +42,8 @@
   visibility: visible;
   opacity: 1;
 }
+
+/* CLASS FOR ONLY 1 STYLE*/
+.my-cursor-pointer {
+  cursor: pointer;
+}
