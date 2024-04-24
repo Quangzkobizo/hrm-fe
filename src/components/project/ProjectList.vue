@@ -3,7 +3,7 @@
     <div class="my-header d-flex">
       <h2 class="ms-1 mb-4 d-inline me-3">All projects</h2>
       <CircleButton
-        to="{}"
+        :to="{ name: 'projects.create' }"
         tooltip="Add project"
         iconClass="fa fa-plus text-white"
       ></CircleButton>

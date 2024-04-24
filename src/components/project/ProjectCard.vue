@@ -5,22 +5,22 @@
     <p>{{ projectRef.description }}</p>
     <div>
       <div class="row">
-        <div class="col-lg-5">Created</div>
-        <span class="col-lg-7">
+        <div class="col-lg-4">Created</div>
+        <span class="col-lg-8">
           <i class="far fa-calendar-alt me-1"></i>
           {{ projectRef.start_date }}
         </span>
       </div>
       <div class="row">
-        <div class="col-lg-5">Deadline</div>
-        <span class="col-lg-7">
+        <div class="col-lg-4">Deadline</div>
+        <span class="col-lg-8">
           <i class="far fa-calendar-alt me-1"></i>
           {{ projectRef.end_date }}
         </span>
       </div>
       <div class="row">
-        <div class="col-lg-5">Priority</div>
-        <div class="col-lg-7">
+        <div class="col-lg-4">Priority</div>
+        <div class="col-lg-8">
           <span class="me-2">
             <i
               v-if="projectRef.priority === 'High'"
@@ -45,12 +45,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-5">Client</div>
-        <div class="col-lg-7">{{ projectRef.client }}</div>
+        <div class="col-lg-4">Client</div>
+        <div class="col-lg-8">{{ projectRef.client }}</div>
       </div>
       <div class="row">
-        <div class="col-lg-5">Price</div>
-        <div class="col-lg-7">${{ projectRef.price }}</div>
+        <div class="col-lg-4">Price</div>
+        <div class="col-lg-8">${{ projectRef.price }}</div>
       </div>
 
       <hr />
@@ -85,10 +85,10 @@ export default {
 
     // Sử dụng Moment.js để định dạng lại ngày
     let formattedStartDate = moment(projectRef.value.start_date).format(
-      "MMM D, YYYY"
+      "MMM DD, YYYY"
     );
     let formattedEndDate = moment(projectRef.value.end_date).format(
-      "MMM D, YYYY"
+      "MMM DD, YYYY"
     );
 
     const priorityString = projectRef.value.priority;

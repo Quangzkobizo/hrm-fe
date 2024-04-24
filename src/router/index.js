@@ -6,6 +6,7 @@ import UserForm from "@/components/form/UserForm.vue";
 import EmployeeList from "@/components/employees/EmployeeList.vue";
 import AddUser from "@/components/form/AddUser.vue";
 import ProjectList from "@/components/project/ProjectList.vue";
+import CreateProject from "@/components/project/CreateProject.vue";
 
 const routes = [
   {
@@ -47,6 +48,11 @@ const routes = [
     path: "/projects",
     name: "projects.index",
     component: ProjectList,
+  },
+  {
+    path: "/projects/create",
+    name: "projects.create",
+    component: CreateProject,
   },
 ];
 
