@@ -1,7 +1,17 @@
 <template>
   <div class="border border-secondary rounded-2 p-3 mb-4 text-secondary shadow">
-    <i class="fas fa-pager fs-3 me-3 text-primary"></i>
-    <h3 class="text-dark d-inline-block">{{ projectRef.title }}</h3>
+    <div class="d-flex">
+      <i class="fas fa-pager fs-3 me-3 text-primary"></i>
+      <h4 class="text-dark d-inline">{{ projectRef.title }}</h4>
+      <CircleButton
+        class="ms-auto"
+        :to="{ name: 'projects.update', params: { id: projectRef.id } }"
+        iconClass="fas fa-edit text-white"
+        tooltip="Edit Project"
+      >
+      </CircleButton>
+    </div>
+
     <p>{{ projectRef.description }}</p>
     <div>
       <div class="row">
@@ -72,8 +82,12 @@
 <script>
 import moment from "moment";
 import { toRefs } from "vue";
+import CircleButton from "../employees/CircleButton.vue";
 
 export default {
+  components: {
+    CircleButton,
+  },
   props: {
     project: {
       type: Object,

@@ -54,6 +54,11 @@ const routes = [
     name: "projects.create",
     component: CreateProject,
   },
+  {
+    path: "/projects/update/:id?",
+    name: "projects.update",
+    component: CreateProject,
+  },
 ];
 
 const router = createRouter({

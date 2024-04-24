@@ -50,6 +50,7 @@
             class="form-control"
             v-model="description"
             rows="3"
+            placeholder="describe this project"
           ></textarea>
         </div>
       </div>
@@ -62,21 +63,44 @@
 </template>
 
 <script>
-import { warn } from "vue";
+import { useRoute } from "vue-router";
 import axios from "../../api";
 export default {
-  data() {
+  async setup() {
+    const route = useRoute();
+
+    //Default values
+    let title = "Efren Reyes";
+    let client = "FSR";
+    let priority = "high";
+    let price = 673;
+    let start_date = null;
+    let end_date = null;
+    let description = "nothing to mieu ta this project";
+
+    if (route.name.endsWith("update")) {
+      const showResonse = await axios.get("projects/" + route.params.id);
+      const projectData = showResonse.data;
+      title = projectData.title;
+      client = projectData.client;
+      priority = projectData.priority;
+      price = projectData.price;
+      start_date = projectData.start_date;
+      end_date = projectData.end_date;
+      description = projectData.description;
+    }
+
     return {
-      title: "Efren Reyes",
-      client: "FSR",
-      priority: "high",
-      price: 673,
-      start_date: null,
-      end_date: null,
-      description: "nothing to mieu ta this project",
+      title,
+      client,
+      priority,
+      price,
+      start_date,
+      end_date,
+      description,
+      route,
     };
   },
-  setup() {},
   methods: {
     sendRequest() {
       if (
@@ -98,13 +122,12 @@ export default {
 
       const startDate = new Date(this.start_date);
       const endDate = new Date(this.end_date);
-
       if (startDate > endDate) {
         alert("End date must be later than Start date");
         return;
       }
 
-      axios.post("projects", {
+      let myFormData = {
         title: this.title,
         client: this.client,
         priority: this.priority,
@@ -113,8 +136,13 @@ export default {
         end_date: this.end_date,
         description: this.description,
         progress: 0,
-      });
+      };
 
+      if (this.route.name.endsWith("update")) {
+        axios.put("projects/" + this.route.params.id, myFormData);
+      } else {
+        axios.post("projects", myFormData);
+      }
       this.$router.push("/projects");
     },
   },
