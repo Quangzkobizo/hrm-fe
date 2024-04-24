@@ -24,8 +24,10 @@
           <div
             class="my-circle-button my-tooltip d-flex justify-content-center align-items-center"
           >
-            <i class="fas fa-redo text-white"></i>
-            <span class="my-tooltiptext">Refresh</span>
+            <RouterLink :to="{}">
+              <i class="fas fa-redo text-white"></i>
+              <span class="my-tooltiptext">Refresh</span>
+            </RouterLink>
           </div>
         </div>
       </div>
@@ -49,41 +51,7 @@
 
         <tbody class="my-table-body">
           <tr class="" v-for="user in paginatedUsers" :key="user.id">
-            <td class="ps-3 pe-3">
-              <img
-                height="36px"
-                width="36px"
-                :src="getUserAvatar(user)"
-                alt="Avatar"
-                class="rounded-circle opacity-75"
-              />
-            </td>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.role }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.address }}</td>
-            <td>{{ user.birthDate }}</td>
-            <td>{{ user.gender }}</td>
-            <td>
-              <RouterLink
-                :to="{ name: 'user.update', params: { id: user.id } }"
-              >
-                <a class="my-tooltip" style="cursor: pointer">
-                  <i class="fas fa-edit text-primary me-1 ms-1"></i>
-                  <span class="my-tooltiptext">Edit</span>
-                </a>
-              </RouterLink>
-              <a
-                @click="deleteAlert(user.id)"
-                class="my-tooltip"
-                style="cursor: pointer"
-              >
-                <i class="far fa-trash-alt text-danger me-1 ms-1"></i>
-                <span class="my-tooltiptext">Delete</span>
-              </a>
-            </td>
+            <EmployeeRow :userProp="user"> </EmployeeRow>
           </tr>
         </tbody>
       </table>
@@ -115,9 +83,13 @@
 
 <script>
 import axios from "../../api.js";
+import EmployeeRow from "./EmployeeRow";
 
 export default {
   name: "EmployeeList",
+  components: {
+    EmployeeRow,
+  },
   data() {
     return {
       itemPerPage: 10,
@@ -126,8 +98,8 @@ export default {
   },
   computed: {
     paginatedUsers() {
-      const startIndex = (this.currentPage - 1) * this.itemPerPage;
-      const endIndex = startIndex + this.itemPerPage;
+      const startIndex = (this.currentPage - 1) * Number(this.itemPerPage);
+      const endIndex = startIndex + Number(this.itemPerPage);
       return this.userIndexResponse.slice(startIndex, endIndex);
     },
   },
@@ -171,12 +143,6 @@ export default {
         this.currentPage--;
       }
     },
-
-    getUserAvatar(user) {
-      return user.avatar
-        ? `http://localhost:8000/storage/avatars/${user.avatar}`
-        : "http://localhost:8000/storage/avatars/default.png";
-    },
   },
 };
 </script>
@@ -186,8 +152,7 @@ export default {
   background-color: #cdd6eb;
 }
 
-.my-table-head th,
-.my-table-body td {
+.my-table-head th {
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 12px;

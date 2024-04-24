@@ -5,6 +5,7 @@ import Logout from "../components/auth/Logout.vue";
 import UserForm from "@/components/form/UserForm.vue";
 import EmployeeList from "@/components/employees/EmployeeList.vue";
 import AddUser from "@/components/form/AddUser.vue";
+import ProjectList from "@/components/project/ProjectList.vue";
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
     path: "/user/create",
     name: "user.create",
     component: AddUser,
+  },
+  {
+    path: "/projects",
+    name: "projects.index",
+    component: ProjectList,
   },
 ];
 

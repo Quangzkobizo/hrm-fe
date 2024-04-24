@@ -25,7 +25,6 @@
 <script>
 import { useRoute } from "vue-router";
 import { computed, onMounted, ref } from "vue";
-import { sendMeRequest } from "./apicall";
 import axios from "./api";
 
 import SideBar from "./components/shared/SideBar";
@@ -49,7 +48,6 @@ export default {
       try {
         // const response = await sendMeRequest();
         const response = await axios.get("/users/me");
-        console.log("response from App.vue: ", response);
         if (response && response.data.user) {
           user.value = response.data.user;
           localStorage.setItem("loggingUser", JSON.stringify(user.value));

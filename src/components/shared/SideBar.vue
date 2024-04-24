@@ -8,10 +8,20 @@
       :imgSrc="item.imgSrc"
     />
 
-    <span class="fas fa-users"></span>
-    <router-link :to="{ name: 'user.index' }">
-      <span class="brand-text ms-3">Employees</span>
-    </router-link>
+    <div>
+      <span class="fas fa-users"></span>
+      <router-link :to="{ name: 'user.index' }">
+        <span class="brand-text ms-3">Employees</span>
+      </router-link>
+      <hr />
+    </div>
+
+    <div>
+      <i class="fas fa-pager"></i>
+      <router-link :to="{ name: 'projects.index' }">
+        <span class="brand-text ms-3">Projects</span>
+      </router-link>
+    </div>
 
     <hr />
 
