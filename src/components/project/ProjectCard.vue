@@ -23,22 +23,25 @@
         <div class="col-lg-7">
           <span class="me-2">
             <i
-              v-if="projectRef.priority === 'high'"
+              v-if="projectRef.priority === 'High'"
               class="fas fa-angle-double-up"
               style="color: #f91010"
             ></i>
             <i
-              v-if="projectRef.priority === 'medium'"
+              v-if="projectRef.priority === 'Medium'"
               class="fas fa-equals"
               style="color: #fccb1d"
             ></i>
             <i
-              v-if="projectRef.priority === 'low'"
+              v-if="projectRef.priority === 'Low'"
               class="fas fa-angle-double-down"
               style="color: #208cdf"
             ></i>
           </span>
-          <span>{{ projectRef.priority }}</span>
+          <span>{{
+            projectRef.priority.charAt(0).toUpperCase() +
+            projectRef.priority.slice(1)
+          }}</span>
         </div>
       </div>
       <div class="row">
@@ -88,11 +91,16 @@ export default {
       "MMM D, YYYY"
     );
 
+    const priorityString = projectRef.value.priority;
+    const formatPriority =
+      priorityString.charAt(0).toUpperCase() + priorityString.slice(1);
+
     return {
       projectRef: {
         ...projectRef.value,
         start_date: formattedStartDate,
         end_date: formattedEndDate,
+        priority: formatPriority,
       },
     };
   },

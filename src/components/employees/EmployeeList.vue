@@ -13,22 +13,16 @@
           </div>
         </div>
         <div class="my-right me-5 d-flex">
-          <div
-            class="my-circle-button my-tooltip d-flex justify-content-center align-items-center"
-          >
-            <RouterLink :to="{ name: 'user.create' }">
-              <i class="fas fa-plus text-white"></i>
-              <span class="my-tooltiptext">Add employee</span>
-            </RouterLink>
-          </div>
-          <div
-            class="my-circle-button my-tooltip d-flex justify-content-center align-items-center"
-          >
-            <RouterLink :to="{}">
-              <i class="fas fa-redo text-white"></i>
-              <span class="my-tooltiptext">Refresh</span>
-            </RouterLink>
-          </div>
+          <CircleButton
+            :to="{ name: 'user.create' }"
+            iconClass="fas fa-plus text-white"
+            tooltip="Add employee"
+          />
+          <CircleButton
+            :to="{}"
+            iconClass="fas fa-redo text-white"
+            tooltip="Refresh"
+          />
         </div>
       </div>
     </div>
@@ -84,11 +78,13 @@
 <script>
 import axios from "../../api.js";
 import EmployeeRow from "./EmployeeRow";
+import CircleButton from "./CircleButton.vue";
 
 export default {
   name: "EmployeeList",
   components: {
     EmployeeRow,
+    CircleButton,
   },
   data() {
     return {
@@ -161,15 +157,5 @@ export default {
 
 tr {
   border-bottom: 1px solid lightgray;
-}
-
-.my-circle-button {
-  background-color: #3f51b5;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  margin-left: 8px;
-  margin-right: 8px;
 }
 </style>
