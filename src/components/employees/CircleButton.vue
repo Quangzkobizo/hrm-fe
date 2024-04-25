@@ -1,6 +1,6 @@
 <template>
   <div
-    class="my-circle-button my-tooltip ms-2 me-2 d-flex justify-content-center align-items-center"
+    class="my-circle-button my-tooltip d-flex justify-content-center align-items-center"
   >
     <RouterLink :to="to">
       <i :class="iconClass"></i>

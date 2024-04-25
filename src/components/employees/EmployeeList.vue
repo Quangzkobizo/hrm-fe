@@ -17,11 +17,13 @@
             :to="{ name: 'user.create' }"
             iconClass="fas fa-plus text-white"
             tooltip="Add employee"
+            class="me-2 ms-2"
           />
           <CircleButton
             :to="{}"
             iconClass="fas fa-redo text-white"
             tooltip="Refresh"
+            class="me-2 ms-2"
           />
         </div>
       </div>
@@ -119,13 +121,6 @@ export default {
     };
   },
   methods: {
-    async deleteAlert(id) {
-      if (confirm("Are you sure?")) {
-        const axiosRes = await axios.delete("users/" + id);
-        console.log(axiosRes);
-        window.location.reload();
-      }
-    },
     nextPage() {
       const totalPages = Math.ceil(
         this.userIndexResponse.length / this.itemPerPage

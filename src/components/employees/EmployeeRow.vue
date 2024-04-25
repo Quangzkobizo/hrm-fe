@@ -30,6 +30,7 @@
 
 <script>
 import { toRefs } from "vue";
+import axios from "../../api";
 
 export default {
   props: {
@@ -50,6 +51,13 @@ export default {
       return user.avatar
         ? `http://localhost:8000/storage/avatars/${user.avatar}`
         : "http://localhost:8000/storage/avatars/default.png";
+    },
+    async deleteAlert(id) {
+      if (confirm("Are you sure?")) {
+        const axiosRes = await axios.delete("users/" + id);
+        console.log(axiosRes);
+        window.location.reload();
+      }
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="ms-5 me-5">
-    <h3>Add project</h3>
+    <h3>{{ formTitle }}</h3>
     <form @submit.prevent="sendRequest">
       <div class="row">
         <div class="form-group col-lg-6">
@@ -54,10 +54,23 @@
           ></textarea>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary mt-3">Submit</button>
-      <RouterLink :to="{ name: 'projects.index' }">
-        <button class="btn btn-danger mt-3 ms-3">Cancel</button>
-      </RouterLink>
+      <div class="my-buttons mt-3 d-flex justify-content-between">
+        <div class="my-left-buttons">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <RouterLink :to="{ name: 'projects.index' }">
+            <button class="btn btn-danger ms-3">Cancel</button>
+          </RouterLink>
+        </div>
+        <div v-if="route.name.endsWith('update')" class="my-right-buttons">
+          <button
+            type="button"
+            @click="deleteProject"
+            class="btn btn-danger me-5"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -74,8 +87,8 @@ export default {
     let client = "FSR";
     let priority = "high";
     let price = 673;
-    let start_date = null;
-    let end_date = null;
+    let start_date = "2020-01-01";
+    let end_date = "2021-01-01";
     let description = "nothing to mieu ta this project";
 
     if (route.name.endsWith("update")) {
@@ -90,6 +103,13 @@ export default {
       description = projectData.description;
     }
 
+    start_date = start_date.slice(0, 10);
+    end_date = end_date.slice(0, 10);
+
+    const formTitle = route.name.endsWith("projects")
+      ? "Update project"
+      : "Create project";
+
     return {
       title,
       client,
@@ -99,6 +119,7 @@ export default {
       end_date,
       description,
       route,
+      formTitle, //The title of this form
     };
   },
   methods: {
@@ -144,6 +165,13 @@ export default {
         axios.post("projects", myFormData);
       }
       this.$router.push("/projects");
+    },
+    deleteProject() {
+      if (confirm("Are you sure to delete this project")) {
+        axios.delete("projects/" + this.route.params.id);
+
+        this.$router.push({ name: "projects.index" });
+      }
     },
   },
 };

@@ -133,7 +133,7 @@ export default {
     });
 
     const loggingUser = JSON.parse(localStorage.getItem("loggingUser"));
-    console.log(loggingUser);
+    console.log(myFormData.birthDate);
 
     return { userToEdit, myFormData, loggingUser };
   },
