@@ -7,6 +7,7 @@ import EmployeeList from "@/components/employees/EmployeeList.vue";
 import AddUser from "@/components/form/AddUser.vue";
 import ProjectList from "@/components/project/ProjectList.vue";
 import CreateProject from "@/components/project/CreateProject.vue";
+import TaskList from "../components/task/TaskList.vue";
 
 const routes = [
   {
@@ -58,6 +59,11 @@ const routes = [
     path: "/projects/update/:id?",
     name: "projects.update",
     component: CreateProject,
+  },
+  {
+    path: "/tasks",
+    name: "tasks.index",
+    component: TaskList,
   },
 ];
 

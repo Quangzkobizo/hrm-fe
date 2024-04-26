@@ -21,6 +21,14 @@
       <router-link :to="{ name: 'projects.index' }">
         <span class="brand-text ms-3">Projects</span>
       </router-link>
+      <hr />
+    </div>
+
+    <div>
+      <i class="fas fa-tasks"></i>
+      <router-link :to="{ name: 'tasks.index' }">
+        <span class="brand-text ms-3">Tasks</span>
+      </router-link>
     </div>
 
     <hr />
